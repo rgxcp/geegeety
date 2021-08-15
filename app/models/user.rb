@@ -53,4 +53,11 @@ class User
     return true if row["count"] != 0
     false
   end
+
+  def save
+    {
+      :success => false,
+      :errors => ["", "", ""]
+    }
+  end
 end

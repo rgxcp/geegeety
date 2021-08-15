@@ -147,4 +147,19 @@ describe User do
       end
     end
   end
+
+  describe "#save" do
+    context "when doesn't pass validation" do
+      it "will return false with errors" do
+        user = User.new({
+          :username => "",
+          :email => "",
+          :bio => ""
+        })
+        save_result = user.save
+        expect(save_result[:success]).to be_falsey
+        expect(save_result[:errors].size).to eq(3)
+      end
+    end
+  end
 end
