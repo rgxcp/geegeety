@@ -1,6 +1,7 @@
 class Post
   def initialize(params)
     @body = params[:body]
+    @attachment = params[:attachment]
   end
 
   def validate
@@ -17,6 +18,11 @@ class Post
     if @body && @body.size > 1000
       result[:valid] = false if result[:valid]
       result[:errors] << "Body can't be more than 1000 characters."
+    end
+
+    if @attachment && @attachment.size == 0
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Attachment size can't be equal to 0 Bytes."
     end
 
     result
