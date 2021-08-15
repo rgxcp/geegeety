@@ -98,4 +98,17 @@ describe User do
       end
     end
   end
+
+  describe "#exists?" do
+    context "when username and/or email already used" do
+      it "will return true" do
+        user = User.new({
+          :username => "janedoe",
+          :email => "janedoe@gmail.com",
+          :bio => "Frontend Student"
+        })
+        expect(user.exists?).to be_truthy
+      end
+    end
+  end
 end

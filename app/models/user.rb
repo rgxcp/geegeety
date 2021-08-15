@@ -43,4 +43,8 @@ class User
 
     result
   end
+
+  def exists?
+    true
+  end
 end
