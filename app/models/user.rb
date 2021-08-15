@@ -55,9 +55,24 @@ class User
   end
 
   def save
-    {
-      :success => false,
-      :errors => ["", "", ""]
+    result = {
+      :success => true,
+      :errors => []
     }
+
+    validate_result = self.validate
+    unless validate_result[:valid]
+      result[:success] = false
+      result[:errors] = validate_result[:errors]
+      return result
+    end
+
+    if self.exists?
+      result[:success] = false
+      result[:errors] << "Username and/or email already used."
+      return result
+    end
+
+    result
   end
 end

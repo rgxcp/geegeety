@@ -156,9 +156,24 @@ describe User do
           :email => "",
           :bio => ""
         })
+        expect(user).not_to receive(:exists?)
         save_result = user.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(3)
+      end
+    end
+
+    context "when username and/or email already used" do
+      it "will return false with errors" do
+        user = User.new({
+          :username => "janedoe",
+          :email => "janedoe@gmail.com",
+          :bio => "Frontend Student"
+        })
+        expect(user).to receive(:exists?).and_return(true)
+        save_result = user.save
+        expect(save_result[:success]).to be_falsey
+        expect(save_result[:errors].first).to eq("Username and/or email already used.")
       end
     end
   end
