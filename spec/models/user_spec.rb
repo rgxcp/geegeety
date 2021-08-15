@@ -62,5 +62,27 @@ describe User do
         expect(validate_result[:errors].first).to eq("Email can't be more than 50 characters.")
       end
     end
+
+    context "when bio nil or empty" do
+      it "will return false with error" do
+        user = User.new({
+          :username => "johndoe",
+          :email => "johndoe@gmail.com",
+          :bio => nil
+        })
+        validate_result = user.validate
+        expect(validate_result[:valid]).to be_falsey
+        expect(validate_result[:errors].first).to eq("Bio can't be nil or empty.")
+
+        user = User.new({
+          :username => "johndoe",
+          :email => "johndoe@gmail.com",
+          :bio => ""
+        })
+        validate_result = user.validate
+        expect(validate_result[:valid]).to be_falsey
+        expect(validate_result[:errors].first).to eq("Bio can't be nil or empty.")
+      end
+    end
   end
 end
