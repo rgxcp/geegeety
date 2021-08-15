@@ -25,6 +25,11 @@ class Post
       result[:errors] << "Attachment size can't be equal to 0 Bytes."
     end
 
+    if @attachment && @attachment.size > 5242880
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Attachment size can't be more than 5 Megabytes."
+    end
+
     result
   end
 end
