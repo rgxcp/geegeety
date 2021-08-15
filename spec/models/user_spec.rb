@@ -84,5 +84,18 @@ describe User do
         expect(validate_result[:errors].first).to eq("Bio can't be nil or empty.")
       end
     end
+
+    context "when bio characters more than 200" do
+      it "will return false with error" do
+        user = User.new({
+          :username => "johndoe",
+          :email => "johndoe@gmail.com",
+          :bio => "Backend Student" * 14
+        })
+        validate_result = user.validate
+        expect(validate_result[:valid]).to be_falsey
+        expect(validate_result[:errors].first).to eq("Bio can't be more than 200 characters.")
+      end
+    end
   end
 end

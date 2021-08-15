@@ -36,6 +36,11 @@ class User
       result[:errors] << "Bio can't be nil or empty."
     end
 
+    if !@bio.nil? && @bio.size > 200
+      result[:valid] = false
+      result[:errors] << "Bio can't be more than 200 characters."
+    end
+
     result
   end
 end
