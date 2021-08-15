@@ -160,6 +160,12 @@ describe User do
           :email => "",
           :bio => ""
         })
+        expect(user)
+          .to receive(:validate)
+          .and_return({
+            :valid => false,
+            :errors => Array.new(3)
+          })
         expect(user).not_to receive(:exists?)
         expect(MySQLConnector).not_to receive(:client)
         save_result = user.save
@@ -170,6 +176,12 @@ describe User do
 
     context "when username and/or email already used" do
       it "will return falsey hash with errors" do
+        expect(exists_user)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
         expect(exists_user).to receive(:exists?).and_return(true)
         expect(MySQLConnector).not_to receive(:client)
         save_result = exists_user.save
@@ -180,6 +192,12 @@ describe User do
 
     context "when passed validation and username & email isn't used" do
       it "will return truthy hash with generated user data" do
+        expect(available_user)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
         expect(available_user).to receive(:exists?).and_return(false)
         allow(MySQLConnector)
           .to receive(:client)
