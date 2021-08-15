@@ -73,6 +73,19 @@ class User
       return result
     end
 
+    client = MySQLConnector.client
+    client.query("INSERT INTO users(username, email, bio) VALUES('#{@username}', '#{@email}', '#{@bio}');")
+    id = client.last_id
+    row = client.query("SELECT * FROM users WHERE id = #{id};")
+    row = row.first
+    result[:user] = {
+      :id => row["id"],
+      :username => @username,
+      :email => @email,
+      :bio => @bio,
+      :created_at => row["created_at"]
+    }
+
     result
   end
 end
