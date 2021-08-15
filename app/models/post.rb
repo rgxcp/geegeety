@@ -14,7 +14,7 @@ class Post
       result[:errors] << "Body can't be nil or empty."
     end
 
-    if !@body.nil? && @body.size > 1000
+    if @body && @body.size > 1000
       result[:valid] = false if result[:valid]
       result[:errors] << "Body can't be more than 1000 characters."
     end

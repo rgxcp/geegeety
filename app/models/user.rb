@@ -18,7 +18,7 @@ class User
       result[:errors] << "Username can't be nil or empty."
     end
 
-    if !@username.nil? && @username.size > 20
+    if @username && @username.size > 20
       result[:valid] = false if result[:valid]
       result[:errors] << "Username can't be more than 20 characters."
     end
@@ -28,7 +28,7 @@ class User
       result[:errors] << "Email can't be nil or empty."
     end
 
-    if !@email.nil? && @email.size > 50
+    if @email && @email.size > 50
       result[:valid] = false if result[:valid]
       result[:errors] << "Email can't be more than 50 characters."
     end
@@ -38,7 +38,7 @@ class User
       result[:errors] << "Bio can't be nil or empty."
     end
 
-    if !@bio.nil? && @bio.size > 200
+    if @bio && @bio.size > 200
       result[:valid] = false if result[:valid]
       result[:errors] << "Bio can't be more than 200 characters."
     end
