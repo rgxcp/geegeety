@@ -162,7 +162,7 @@ describe User do
           :bio => ""
         })
 
-        expect(user)
+        allow(user)
           .to receive(:validate)
           .and_return({
             :valid => false,
@@ -181,14 +181,14 @@ describe User do
 
     context "when username and/or email already used" do
       it "will return falsey hash with errors" do
-        expect(exists_user)
+        allow(exists_user)
           .to receive(:validate)
           .and_return({
             :valid => true,
             :errors => []
           })
 
-        expect(exists_user)
+        allow(exists_user)
           .to receive(:exists?)
           .and_return(true)
 
@@ -202,14 +202,14 @@ describe User do
 
     context "when passed validation and username & email isn't used" do
       it "will return truthy hash with generated user data" do
-        expect(available_user)
+        allow(available_user)
           .to receive(:validate)
           .and_return({
             :valid => true,
             :errors => []
           })
 
-        expect(available_user)
+        allow(available_user)
           .to receive(:exists?)
           .and_return(false)
 
