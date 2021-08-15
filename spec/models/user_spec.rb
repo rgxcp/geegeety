@@ -3,6 +3,22 @@ require_relative "../../app/models/user"
 describe User do
   let(:client) { double }
 
+  let(:exists_user) {
+    User.new({
+      :username => "janedoe",
+      :email => "janedoe@gmail.com",
+      :bio => "Frontend Student"
+    })
+  }
+
+  let(:available_user) {
+    User.new({
+      :username => "johndoe",
+      :email => "johndoe@gmail.com",
+      :bio => "Backend Student"
+    })
+  }
+
   describe "#validate" do
     context "when username nil or empty" do
       it "will return false with error" do
@@ -104,12 +120,6 @@ describe User do
   describe "#exists?" do
     context "when username and/or email already used" do
       it "will return true" do
-        user = User.new({
-          :username => "janedoe",
-          :email => "janedoe@gmail.com",
-          :bio => "Frontend Student"
-        })
-
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -121,18 +131,12 @@ describe User do
             "count" => 1
           }])
 
-        expect(user.exists?).to be_truthy
+        expect(exists_user.exists?).to be_truthy
       end
     end
 
     context "when username and email isn't used" do
       it "will return false" do
-        user = User.new({
-          :username => "johndoe",
-          :email => "johndoe@gmail.com",
-          :bio => "Backend Student"
-        })
-
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -143,7 +147,7 @@ describe User do
             "count" => 0
           }])
 
-        expect(user.exists?).to be_falsey
+        expect(available_user.exists?).to be_falsey
       end
     end
   end
@@ -166,14 +170,9 @@ describe User do
 
     context "when username and/or email already used" do
       it "will return false with errors" do
-        user = User.new({
-          :username => "janedoe",
-          :email => "janedoe@gmail.com",
-          :bio => "Frontend Student"
-        })
-        expect(user).to receive(:exists?).and_return(true)
+        expect(exists_user).to receive(:exists?).and_return(true)
         expect(MySQLConnector).not_to receive(:client)
-        save_result = user.save
+        save_result = exists_user.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].first).to eq("Username and/or email already used.")
       end
@@ -181,12 +180,7 @@ describe User do
 
     context "when passed validation and username & email isn't used" do
       it "will return true with generated user data" do
-        user = User.new({
-          :username => "johndoe",
-          :email => "johndoe@gmail.com",
-          :bio => "Backend Student"
-        })
-        expect(user).to receive(:exists?).and_return(false)
+        expect(available_user).to receive(:exists?).and_return(false)
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -206,7 +200,7 @@ describe User do
             "bio" => "Backend Student",
             "created_at" => "2021-20-21 20:21:20"
           }])
-        save_result = user.save
+        save_result = available_user.save
         expect(save_result[:success]).to be_truthy
         expect(save_result[:errors].size).to eq(0)
         expect(save_result[:user]).to eq({
