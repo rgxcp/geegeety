@@ -141,7 +141,8 @@ describe User do
           .to receive(:client)
           .and_return(client)
 
-        allow(client).to receive(:query)
+        allow(client)
+          .to receive(:query)
           .with("SELECT COUNT(1) as count FROM users WHERE username = 'johndoe' OR email = 'johndoe@gmail.com';")
           .and_return([{
             "count" => 0
@@ -160,14 +161,18 @@ describe User do
           :email => "",
           :bio => ""
         })
+
         expect(user)
           .to receive(:validate)
           .and_return({
             :valid => false,
             :errors => Array.new(3)
           })
+
         expect(user).not_to receive(:exists?)
+
         expect(MySQLConnector).not_to receive(:client)
+
         save_result = user.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(3)
@@ -182,8 +187,13 @@ describe User do
             :valid => true,
             :errors => []
           })
-        expect(exists_user).to receive(:exists?).and_return(true)
+
+        expect(exists_user)
+          .to receive(:exists?)
+          .and_return(true)
+
         expect(MySQLConnector).not_to receive(:client)
+
         save_result = exists_user.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].first).to eq("Username and/or email already used.")
@@ -198,16 +208,23 @@ describe User do
             :valid => true,
             :errors => []
           })
-        expect(available_user).to receive(:exists?).and_return(false)
+
+        expect(available_user)
+          .to receive(:exists?)
+          .and_return(false)
+
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
+
         expect(client)
           .to receive(:query)
           .with("INSERT INTO users(username, email, bio) VALUES('johndoe', 'johndoe@gmail.com', 'Backend Student');")
+
         allow(client)
           .to receive(:last_id)
           .and_return(2)
+
         allow(client)
           .to receive(:query)
           .with("SELECT * FROM users WHERE id = 2;")
@@ -218,6 +235,7 @@ describe User do
             "bio" => "Backend Student",
             "created_at" => "2021-20-21 20:21:20"
           }])
+
         save_result = available_user.save
         expect(save_result[:success]).to be_truthy
         expect(save_result[:errors].size).to eq(0)
