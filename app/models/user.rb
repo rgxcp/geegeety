@@ -25,6 +25,11 @@ class User
       result[:errors] << "Email can't be nil or empty."
     end
 
+    if !@email.nil? && @email.size > 50
+      result[:valid] = false
+      result[:errors] << "Email can't be more than 50 characters."
+    end
+
     result
   end
 end
