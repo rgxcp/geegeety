@@ -14,7 +14,7 @@ class User
     }
 
     if @username.nil? || @username.empty?
-      result[:valid] = false if result[:valid]
+      result[:valid] = false
       result[:errors] << "Username can't be nil or empty."
     end
 
