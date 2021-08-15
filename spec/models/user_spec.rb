@@ -1,6 +1,8 @@
 require_relative "../../app/models/user"
 
 describe User do
+  let(:client) { double }
+
   describe "#validate" do
     context "when username nil or empty" do
       it "will return false with error" do
@@ -100,8 +102,6 @@ describe User do
   end
 
   describe "#exists?" do
-    let(:client) { double }
-
     context "when username and/or email already used" do
       it "will return true" do
         user = User.new({
@@ -187,7 +187,6 @@ describe User do
           :bio => "Backend Student"
         })
         expect(user).to receive(:exists?).and_return(false)
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
