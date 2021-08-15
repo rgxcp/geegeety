@@ -21,7 +21,7 @@ describe User do
 
   describe "#validate" do
     context "when username nil or empty" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => nil
         })
@@ -39,7 +39,7 @@ describe User do
     end
 
     context "when username characters more than 20" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "johndoe" * 3
         })
@@ -50,7 +50,7 @@ describe User do
     end
 
     context "when email nil or empty" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "johndoe",
           :email => nil
@@ -70,7 +70,7 @@ describe User do
     end
 
     context "when email characters more than 50" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "johndoe",
           :email => "johndoe@gmail.com" * 3
@@ -82,7 +82,7 @@ describe User do
     end
 
     context "when bio nil or empty" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "johndoe",
           :email => "johndoe@gmail.com",
@@ -104,7 +104,7 @@ describe User do
     end
 
     context "when bio characters more than 200" do
-      it "will return false with error" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "johndoe",
           :email => "johndoe@gmail.com",
@@ -119,7 +119,7 @@ describe User do
 
   describe "#exists?" do
     context "when username and/or email already used" do
-      it "will return true" do
+      it "will return truthy value" do
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -136,7 +136,7 @@ describe User do
     end
 
     context "when username and email isn't used" do
-      it "will return false" do
+      it "will return falsey value" do
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -154,7 +154,7 @@ describe User do
 
   describe "#save" do
     context "when doesn't pass validation" do
-      it "will return false with errors" do
+      it "will return falsey hash with errors" do
         user = User.new({
           :username => "",
           :email => "",
@@ -169,7 +169,7 @@ describe User do
     end
 
     context "when username and/or email already used" do
-      it "will return false with errors" do
+      it "will return falsey hash with errors" do
         expect(exists_user).to receive(:exists?).and_return(true)
         expect(MySQLConnector).not_to receive(:client)
         save_result = exists_user.save
@@ -179,7 +179,7 @@ describe User do
     end
 
     context "when passed validation and username & email isn't used" do
-      it "will return true with generated user data" do
+      it "will return truthy hash with generated user data" do
         expect(available_user).to receive(:exists?).and_return(false)
         allow(MySQLConnector)
           .to receive(:client)
