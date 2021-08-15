@@ -1,3 +1,5 @@
+require_relative "../db/mysql_connector"
+
 class User
   def initialize(params)
     @username = params[:username]
@@ -45,6 +47,10 @@ class User
   end
 
   def exists?
-    true
+    client = MySQLConnector.client
+    row = client.query("SELECT COUNT(1) as count FROM users WHERE username = '#{@username}' OR email = '#{@email}';")
+    row = row.first
+    return true if row["count"] != 0
+    false
   end
 end

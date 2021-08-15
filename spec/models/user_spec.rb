@@ -107,7 +107,37 @@ describe User do
           :email => "janedoe@gmail.com",
           :bio => "Frontend Student"
         })
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+        allow(client)
+          .to receive(:query)
+          .with("SELECT COUNT(1) as count FROM users WHERE username = 'janedoe' OR email = 'janedoe@gmail.com';")
+          .and_return([{
+            "count" => 1
+          }])
         expect(user.exists?).to be_truthy
+      end
+    end
+
+    context "when username and email isn't used" do
+      it "will return false" do
+        user = User.new({
+          :username => "johndoe",
+          :email => "johndoe@gmail.com",
+          :bio => "Backend Student"
+        })
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+        allow(client).to receive(:query)
+          .with("SELECT COUNT(1) as count FROM users WHERE username = 'johndoe' OR email = 'johndoe@gmail.com';")
+          .and_return([{
+            "count" => 0
+          }])
+        expect(user.exists?).to be_falsey
       end
     end
   end
