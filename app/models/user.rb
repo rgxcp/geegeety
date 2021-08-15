@@ -1,6 +1,7 @@
 class User
   def initialize(params)
     @username = params[:username]
+    @email = params[:email]
   end
 
   def validate
@@ -17,6 +18,11 @@ class User
     if !@username.nil? && @username.size > 20
       result[:valid] = false
       result[:errors] << "Username can't be more than 20 characters."
+    end
+
+    if @email.nil? || @email.empty?
+      result[:valid] = false
+      result[:errors] << "Email can't be nil or empty."
     end
 
     result
