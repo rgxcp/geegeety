@@ -32,4 +32,8 @@ class Post
 
     result
   end
+
+  def filter_hashtags
+    []
+  end
 end

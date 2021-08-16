@@ -64,4 +64,16 @@ describe Post do
       end
     end
   end
+
+  describe "#filter_hashtags" do
+    context "when body doesn't contain hashtags" do
+      it "will return empty array" do
+        post = Post.new({
+          :body => "Hello, World!"
+        })
+        hashtags = post.filter_hashtags
+        expect(hashtags).to be_empty
+      end
+    end
+  end
 end
