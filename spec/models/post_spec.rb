@@ -109,4 +109,17 @@ describe Post do
       end
     end
   end
+
+  describe "#save" do
+    context "when doesn't pass validation" do
+      it "will return falsey hash with errors" do
+        post = Post.new({
+          :body => ""
+        })
+        save_result = post.save
+        expect(save_result[:success]).to be_falsey
+        expect(save_result[:errors].size).to eq(1)
+      end
+    end
+  end
 end

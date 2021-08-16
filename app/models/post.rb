@@ -36,4 +36,11 @@ class Post
   def filter_hashtags
     @body.scan(/#(\w+)/).flatten.map(&:downcase).uniq
   end
+
+  def save
+    {
+      :success => false,
+      :errors => [""]
+    }
+  end
 end
