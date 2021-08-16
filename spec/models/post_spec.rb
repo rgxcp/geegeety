@@ -6,14 +6,27 @@ describe Post do
 
     let(:post) {
       Post.new({
+        :user_id => 2,
         :body => "Hello, World! #gg",
         :attachment => file
       })
     }
 
+    context "when user_id nil" do
+      it "will return falsey hash with errors" do
+        post = Post.new({
+          :user_id => nil
+        })
+        validate_result = post.validate
+        expect(validate_result[:valid]).to be_falsey
+        expect(validate_result[:errors].first).to eq("User Id can't be nil.")
+      end
+    end
+
     context "when body nil or empty" do
       it "will return falsey hash with errors" do
         post = Post.new({
+          :user_id => 2,
           :body => nil
         })
         validate_result = post.validate
@@ -21,6 +34,7 @@ describe Post do
         expect(validate_result[:errors].first).to eq("Body can't be nil or empty.")
 
         post = Post.new({
+          :user_id => 2,
           :body => ""
         })
         validate_result = post.validate
@@ -32,6 +46,7 @@ describe Post do
     context "when body characters more than 1000" do
       it "will return falsey hash with errors" do
         post = Post.new({
+          :user_id => 2,
           :body => "Hello, World! #gg" * 59
         })
         validate_result = post.validate
@@ -69,6 +84,7 @@ describe Post do
     context "when body doesn't contain hashtags" do
       it "will return empty array" do
         post = Post.new({
+          :user_id => 2,
           :body => "Hello, World!"
         })
         hashtags = post.filter_hashtags
@@ -79,6 +95,7 @@ describe Post do
     context "when body contain 3 hashtags" do
       it "will return array with 3 hashtags" do
         post = Post.new({
+          :user_id => 2,
           :body => "Hello, World! #backend #ruby #gg"
         })
         hashtags = post.filter_hashtags
@@ -90,6 +107,7 @@ describe Post do
     context "when body contain 4 hashtags with 3 unique one" do
       it "will return array with 3 uniq hashtags" do
         post = Post.new({
+          :user_id => 2,
           :body => "Hello, World! #backend #ruby #gg #gg"
         })
         hashtags = post.filter_hashtags
@@ -101,6 +119,7 @@ describe Post do
     context "when body contain 4 hashtags with 3 unique case-insensitive one" do
       it "will return array with 3 uniq case-insensitive hashtags" do
         post = Post.new({
+          :user_id => 2,
           :body => "Hello, World! #backend #ruby #gg #GG"
         })
         hashtags = post.filter_hashtags
@@ -114,11 +133,12 @@ describe Post do
     context "when doesn't pass validation" do
       it "will return falsey hash with errors" do
         post = Post.new({
+          :user_id => nil,
           :body => ""
         })
         save_result = post.save
         expect(save_result[:success]).to be_falsey
-        expect(save_result[:errors].size).to eq(1)
+        expect(save_result[:errors].size).to eq(2)
       end
     end
   end

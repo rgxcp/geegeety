@@ -1,5 +1,6 @@
 class Post
   def initialize(params)
+    @user_id = params[:user_id]
     @body = params[:body]
     @attachment = params[:attachment]
   end
@@ -10,8 +11,13 @@ class Post
       :errors => []
     }
 
-    if @body.nil? || @body.empty?
+    if @user_id.nil?
       result[:valid] = false
+      result[:errors] << "User Id can't be nil."
+    end
+
+    if @body.nil? || @body.empty?
+      result[:valid] = false if result[:valid]
       result[:errors] << "Body can't be nil or empty."
     end
 
@@ -40,7 +46,7 @@ class Post
   def save
     {
       :success => false,
-      :errors => [""]
+      :errors => ["", ""]
     }
   end
 end
