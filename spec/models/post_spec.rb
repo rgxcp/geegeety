@@ -97,5 +97,16 @@ describe Post do
         expect(hashtags).to eq(["backend", "ruby", "gg"])
       end
     end
+
+    context "when body contain 4 hashtags with 3 unique case-insensitive one" do
+      it "will return array with 3 uniq case-insensitive hashtags" do
+        post = Post.new({
+          :body => "Hello, World! #backend #ruby #gg #GG"
+        })
+        hashtags = post.filter_hashtags
+        expect(hashtags.size).to eq(3)
+        expect(hashtags).to eq(["backend", "ruby", "gg"])
+      end
+    end
   end
 end

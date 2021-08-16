@@ -34,6 +34,6 @@ class Post
   end
 
   def filter_hashtags
-    @body.scan(/#(\w+)/).flatten.uniq
+    @body.scan(/#(\w+)/).flatten.map(&:downcase).uniq
   end
 end
