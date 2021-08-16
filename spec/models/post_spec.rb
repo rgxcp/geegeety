@@ -75,5 +75,16 @@ describe Post do
         expect(hashtags).to be_empty
       end
     end
+
+    context "when body contain 3 hashtags" do
+      it "will return array with 3 hashtags" do
+        post = Post.new({
+          :body => "Hello, World! #backend #ruby #gg"
+        })
+        hashtags = post.filter_hashtags
+        expect(hashtags.size).to eq(3)
+        expect(hashtags).to eq(["backend", "ruby", "gg"])
+      end
+    end
   end
 end
