@@ -1,3 +1,5 @@
+require_relative "../db/mysql_connector"
+
 class Post
   def initialize(params)
     @user_id = params[:user_id]
@@ -44,9 +46,31 @@ class Post
   end
 
   def save
-    {
-      :success => false,
-      :errors => ["", ""]
+    result = {
+      :success => true,
+      :errors => []
     }
+
+    validate_result = self.validate
+    unless validate_result[:valid]
+      result[:success] = false
+      result[:errors] = validate_result[:errors]
+      return result
+    end
+
+    client = MySQLConnector.client
+    client.query("INSERT INTO posts(user_id, body) VALUES(#{@user_id}, '#{@body}');")
+    id = client.last_id
+    row = client.query("SELECT * FROM posts WHERE id = #{id};")
+    row = row.first
+    result[:post] = {
+      :id => row["id"],
+      :user_id => @user_id,
+      :body => @body,
+      :attachment => row["attachment"],
+      :created_at => row["created_at"]
+    }
+
+    result
   end
 end
