@@ -19,7 +19,7 @@ describe Post do
         })
         validate_result = post.validate
         expect(validate_result[:valid]).to be_falsey
-        expect(validate_result[:errors].first).to eq("User Id can't be nil.")
+        expect(validate_result[:errors].first).to eq("User Id can't be nil or empty.")
       end
     end
 

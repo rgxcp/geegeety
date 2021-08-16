@@ -13,7 +13,7 @@ class Post
 
     if @user_id.nil?
       result[:valid] = false
-      result[:errors] << "User Id can't be nil."
+      result[:errors] << "User Id can't be nil or empty."
     end
 
     if @body.nil? || @body.empty?
