@@ -175,7 +175,7 @@ describe User do
       end
     end
 
-    context "when username and/or email already used" do
+    context "when passed validation and username and/or email already used" do
       it "will return falsey hash with errors" do
         allow(exists_user)
           .to receive(:validate)
