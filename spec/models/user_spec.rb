@@ -169,10 +169,6 @@ describe User do
             :errors => Array.new(3)
           })
 
-        expect(user).not_to receive(:exists?)
-
-        expect(MySQLConnector).not_to receive(:client)
-
         save_result = user.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(3)
@@ -191,8 +187,6 @@ describe User do
         allow(exists_user)
           .to receive(:exists?)
           .and_return(true)
-
-        expect(MySQLConnector).not_to receive(:client)
 
         save_result = exists_user.save
         expect(save_result[:success]).to be_falsey

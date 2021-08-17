@@ -144,8 +144,6 @@ describe Post do
             :errors => Array.new(2)
           })
 
-        expect(MySQLConnector).not_to receive(:client)
-
         save_result = post.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(2)
