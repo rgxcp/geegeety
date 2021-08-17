@@ -26,6 +26,11 @@ class Hashtag
       result[:errors] << "Name can't be nil or empty."
     end
 
+    if @name && @name.size > 255
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Name can't be more than 255 characters."
+    end
+
     result
   end
 end
