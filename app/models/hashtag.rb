@@ -33,4 +33,11 @@ class Hashtag
 
     result
   end
+
+  def save
+    {
+      :success => false,
+      :errors => ["", "", ""]
+    }
+  end
 end

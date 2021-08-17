@@ -68,4 +68,20 @@ describe Hashtag do
       end
     end
   end
+
+  describe "#save" do
+    context "when doesn't pass validation" do
+      it "will return falsey hash with errors" do
+        hashtag = Hashtag.new({
+          :hashtagable_id => nil,
+          :hashtagable_type => "",
+          :name => ""
+        })
+
+        save_result = hashtag.save
+        expect(save_result[:success]).to be_falsey
+        expect(save_result[:errors].size).to eq(3)
+      end
+    end
+  end
 end
