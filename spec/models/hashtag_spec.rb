@@ -78,9 +78,68 @@ describe Hashtag do
           :name => ""
         })
 
+        allow(hashtag)
+          .to receive(:validate)
+          .and_return({
+            :valid => false,
+            :errors => Array.new(3)
+          })
+
         save_result = hashtag.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(3)
+      end
+    end
+
+    context "when passed validation" do
+      it "will return truthy hash with generated hashtag data" do
+        hashtag = Hashtag.new({
+          :hashtagable_id => 1,
+          :hashtagable_type => "POST",
+          :name => "backend"
+        })
+
+        allow(hashtag)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
+
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        expect(client)
+          .to receive(:query)
+          .with("INSERT INTO hashtags(hashtagable_id, hashtagable_type, name) VALUES(1, 'POST', 'backend');")
+
+        allow(client)
+          .to receive(:last_id)
+          .and_return(1)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT * FROM hashtags WHERE id = 1;")
+          .and_return([{
+            "id" => 1,
+            "hashtagable_id" => 1,
+            "hashtagable_type" => "POST",
+            "name" => "backend",
+            "created_at" => "2021-20-21 20:21:20"
+          }])
+
+        save_result = hashtag.save
+        expect(save_result[:success]).to be_truthy
+        expect(save_result[:errors].size).to eq(0)
+        expect(save_result[:hashtag]).to eq({
+          :id => 1,
+          :hashtagable_id => 1,
+          :hashtagable_type => "POST",
+          :name => "backend",
+          :created_at => "2021-20-21 20:21:20"
+        })
       end
     end
   end

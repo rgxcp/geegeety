@@ -1,3 +1,5 @@
+require_relative "../db/mysql_connector"
+
 class Hashtag
   def initialize(params)
     @hashtagable_id = params[:hashtagable_id]
@@ -35,9 +37,31 @@ class Hashtag
   end
 
   def save
-    {
-      :success => false,
-      :errors => ["", "", ""]
+    result = {
+      :success => true,
+      :errors => []
     }
+
+    validate_result = self.validate
+    unless validate_result[:valid]
+      result[:success] = false
+      result[:errors] = validate_result[:errors]
+      return result
+    end
+
+    client = MySQLConnector.client
+    client.query("INSERT INTO hashtags(hashtagable_id, hashtagable_type, name) VALUES(#{@hashtagable_id}, '#{@hashtagable_type}', '#{@name}');")
+    id = client.last_id
+    row = client.query("SELECT * FROM hashtags WHERE id = #{id};")
+    row = row.first
+    result[:hashtag] = {
+      :id => row["id"],
+      :hashtagable_id => @hashtagable_id,
+      :hashtagable_type => @hashtagable_type,
+      :name => @name,
+      :created_at => row["created_at"]
+    }
+
+    result
   end
 end
