@@ -185,7 +185,7 @@ describe Post do
             "user_id" => 2,
             "body" => "Hello, World!",
             "attachment" => "",
-            "created_at" => "2021-20-21 20:21:20"
+            "created_at" => "2021-08-21 20:08:21"
           }])
 
         save_result = post.save
@@ -196,7 +196,7 @@ describe Post do
           :user_id => 2,
           :body => "Hello, World!",
           :attachment => "",
-          :created_at => "2021-20-21 20:21:20"
+          :created_at => "2021-08-21 20:08:21"
         })
       end
     end
@@ -230,15 +230,15 @@ describe Post do
         allow(Time)
           .to receive_message_chain(:now, :strftime)
           .with("%Y%m%d%H%M%S.jpg")
-          .and_return("20212021202120.jpg")
+          .and_return("20210821200821.jpg")
 
         expect(File)
           .to receive(:open)
-          .with("public/attachments/20212021202120.jpg", "wb")
+          .with("public/attachments/20210821200821.jpg", "wb")
 
         expect(client)
           .to receive(:query)
-          .with("INSERT INTO posts(user_id, body, attachment) VALUES(2, 'Hello, World!', '20212021202120.jpg');")
+          .with("INSERT INTO posts(user_id, body, attachment) VALUES(2, 'Hello, World!', '20210821200821.jpg');")
 
         allow(client)
           .to receive(:last_id)
@@ -251,8 +251,8 @@ describe Post do
             "id" => 1,
             "user_id" => 2,
             "body" => "Hello, World!",
-            "attachment" => "20212021202120.jpg",
-            "created_at" => "2021-20-21 20:21:20"
+            "attachment" => "20210821200821.jpg",
+            "created_at" => "2021-08-21 20:08:21"
           }])
 
         save_result = post.save
@@ -262,8 +262,8 @@ describe Post do
           :id => 1,
           :user_id => 2,
           :body => "Hello, World!",
-          :attachment => "20212021202120.jpg",
-          :created_at => "2021-20-21 20:21:20"
+          :attachment => "20210821200821.jpg",
+          :created_at => "2021-08-21 20:08:21"
         })
       end
     end

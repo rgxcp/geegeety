@@ -127,7 +127,7 @@ describe Hashtag do
             "hashtagable_id" => 1,
             "hashtagable_type" => "POST",
             "name" => "backend",
-            "created_at" => "2021-20-21 20:21:20"
+            "created_at" => "2021-08-21 20:08:21"
           }])
 
         save_result = hashtag.save
@@ -138,7 +138,7 @@ describe Hashtag do
           :hashtagable_id => 1,
           :hashtagable_type => "POST",
           :name => "backend",
-          :created_at => "2021-20-21 20:21:20"
+          :created_at => "2021-08-21 20:08:21"
         })
       end
     end

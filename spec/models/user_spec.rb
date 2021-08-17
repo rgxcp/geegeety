@@ -227,7 +227,7 @@ describe User do
             "username" => "johndoe",
             "email" => "johndoe@gmail.com",
             "bio" => "Backend Student",
-            "created_at" => "2021-20-21 20:21:20"
+            "created_at" => "2021-08-21 20:08:21"
           }])
 
         save_result = available_user.save
@@ -238,7 +238,7 @@ describe User do
           :username => "johndoe",
           :email => "johndoe@gmail.com",
           :bio => "Backend Student",
-          :created_at => "2021-20-21 20:21:20"
+          :created_at => "2021-08-21 20:08:21"
         })
       end
     end
