@@ -59,7 +59,16 @@ class Post
     end
 
     client = MySQLConnector.client
-    client.query("INSERT INTO posts(user_id, body) VALUES(#{@user_id}, '#{@body}');")
+    if @attachment
+      extension = File.extname(@attachment)
+      filename = Time.now.strftime("%Y%m%d%H%M%S#{extension}")
+      File.open("public/attachments/#{filename}", "wb") do |file|
+        file.write(@attachment.read)
+      end
+      client.query("INSERT INTO posts(user_id, body, attachment) VALUES(#{@user_id}, '#{@body}', '#{filename}');")
+    else
+      client.query("INSERT INTO posts(user_id, body) VALUES(#{@user_id}, '#{@body}');")
+    end
     id = client.last_id
     row = client.query("SELECT * FROM posts WHERE id = #{id};")
     row = row.first

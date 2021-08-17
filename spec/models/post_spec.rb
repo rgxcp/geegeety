@@ -200,5 +200,72 @@ describe Post do
         })
       end
     end
+
+    context "when passed validation, with attachment, and without hashtags" do
+      it "will return truthy hash with generated post data" do
+        file = double
+        post = Post.new({
+          :user_id => 2,
+          :body => "Hello, World!",
+          :attachment => file
+        })
+
+        allow(post)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
+
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(File)
+          .to receive(:extname)
+          .with(file)
+          .and_return(".jpg")
+
+        allow(Time)
+          .to receive_message_chain(:now, :strftime)
+          .with("%Y%m%d%H%M%S.jpg")
+          .and_return("20212021202120.jpg")
+
+        expect(File)
+          .to receive(:open)
+          .with("public/attachments/20212021202120.jpg", "wb")
+
+        expect(client)
+          .to receive(:query)
+          .with("INSERT INTO posts(user_id, body, attachment) VALUES(2, 'Hello, World!', '20212021202120.jpg');")
+
+        allow(client)
+          .to receive(:last_id)
+          .and_return(1)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT * FROM posts WHERE id = 1;")
+          .and_return([{
+            "id" => 1,
+            "user_id" => 2,
+            "body" => "Hello, World!",
+            "attachment" => "20212021202120.jpg",
+            "created_at" => "2021-20-21 20:21:20"
+          }])
+
+        save_result = post.save
+        expect(save_result[:success]).to be_truthy
+        expect(save_result[:errors].size).to eq(0)
+        expect(save_result[:post]).to eq({
+          :id => 1,
+          :user_id => 2,
+          :body => "Hello, World!",
+          :attachment => "20212021202120.jpg",
+          :created_at => "2021-20-21 20:21:20"
+        })
+      end
+    end
   end
 end
