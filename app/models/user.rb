@@ -50,8 +50,7 @@ class User
     client = MySQLConnector.client
     row = client.query("SELECT COUNT(1) as count FROM users WHERE username = '#{@username}' OR email = '#{@email}';")
     row = row.first
-    return true if row["count"] != 0
-    false
+    row["count"] != 0
   end
 
   def save
