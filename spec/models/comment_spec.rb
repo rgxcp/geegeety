@@ -157,9 +157,73 @@ describe Comment do
           :post_id => nil,
           :body => ""
         })
+
+        allow(comment)
+          .to receive(:validate)
+          .and_return({
+            :valid => false,
+            :errors => Array.new(3)
+          })
+
         save_result = comment.save
         expect(save_result[:success]).to be_falsey
         expect(save_result[:errors].size).to eq(3)
+      end
+    end
+
+    context "when passed validation and without attachment & hashtags" do
+      it "will return truthy hash with generated comment data" do
+        comment = Comment.new({
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World!"
+        })
+
+        allow(comment)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
+
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        expect(client)
+          .to receive(:query)
+          .with("INSERT INTO comments(user_id, post_id, body) VALUES(2, 1, 'Hello too, World!');")
+
+        allow(client)
+          .to receive(:last_id)
+          .and_return(1)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT * FROM comments WHERE id = 1;")
+          .and_return([{
+            "id" => 1,
+            "user_id" => 2,
+            "post_id" => 1,
+            "body" => "Hello too, World!",
+            "attachment" => "",
+            "hashtags" => [],
+            "created_at" => "2021-08-21 20:08:21"
+          }])
+
+        save_result = comment.save
+        expect(save_result[:success]).to be_truthy
+        expect(save_result[:errors].size).to eq(0)
+        expect(save_result[:comment]).to eq({
+          :id => 1,
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World!",
+          :attachment => "",
+          :hashtags => [],
+          :created_at => "2021-08-21 20:08:21"
+        })
       end
     end
   end
