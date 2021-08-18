@@ -26,6 +26,11 @@ class Comment
       result[:errors] << "Body can't be nil or empty."
     end
 
+    if @body && @body.size > 1000
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Body can't be more than 1000 characters."
+    end
+
     result
   end
 end
