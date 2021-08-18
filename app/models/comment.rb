@@ -46,6 +46,6 @@ class Comment
   end
 
   def filter_hashtags
-    @body.scan(/#(\w+)/).flatten
+    @body.scan(/#(\w+)/).flatten.uniq
   end
 end

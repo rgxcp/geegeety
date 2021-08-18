@@ -121,5 +121,18 @@ describe Comment do
         expect(hashtags).to eq(["backend", "ruby", "gg"])
       end
     end
+
+    context "when body contain 4 hashtags with 3 unique one" do
+      it "will return array with 3 uniq hashtags" do
+        comment = Comment.new({
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World! #backend #ruby #gg #gg"
+        })
+        hashtags = comment.filter_hashtags
+        expect(hashtags.size).to eq(3)
+        expect(hashtags).to eq(["backend", "ruby", "gg"])
+      end
+    end
   end
 end
