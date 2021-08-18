@@ -2,6 +2,7 @@ class Comment
   def initialize(params)
     @user_id = params[:user_id]
     @post_id = params[:post_id]
+    @body = params[:body]
   end
 
   def validate
@@ -18,6 +19,11 @@ class Comment
     if @post_id.nil?
       result[:valid] = false if result[:valid]
       result[:errors] << "Post Id can't be nil or empty."
+    end
+
+    if @body.nil? || @body.empty?
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Body can't be nil or empty."
     end
 
     result
