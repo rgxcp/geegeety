@@ -148,4 +148,19 @@ describe Comment do
       end
     end
   end
+
+  describe "#save" do
+    context "when doesn't pass validation" do
+      it "will return falsey hash with errors" do
+        comment = Comment.new({
+          :user_id => nil,
+          :post_id => nil,
+          :body => ""
+        })
+        save_result = comment.save
+        expect(save_result[:success]).to be_falsey
+        expect(save_result[:errors].size).to eq(3)
+      end
+    end
+  end
 end
