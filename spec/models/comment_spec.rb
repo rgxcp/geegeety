@@ -95,4 +95,18 @@ describe Comment do
       end
     end
   end
+
+  describe "#filter_hashtags" do
+    context "when body doesn't contain hashtags" do
+      it "will return empty array" do
+        comment = Comment.new({
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World!"
+        })
+        hashtags = comment.filter_hashtags
+        expect(hashtags).to be_empty
+      end
+    end
+  end
 end
