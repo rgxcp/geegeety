@@ -3,6 +3,7 @@ class Comment
     @user_id = params[:user_id]
     @post_id = params[:post_id]
     @body = params[:body]
+    @attachment = params[:attachment]
   end
 
   def validate
@@ -29,6 +30,11 @@ class Comment
     if @body && @body.size > 1000
       result[:valid] = false if result[:valid]
       result[:errors] << "Body can't be more than 1000 characters."
+    end
+
+    if @attachment && @attachment.size == 0
+      result[:valid] = false if result[:valid]
+      result[:errors] << "Attachment size can't be equal to 0 Bytes."
     end
 
     result

@@ -59,5 +59,25 @@ describe Comment do
         expect(validate_result[:errors].first).to eq("Body can't be more than 1000 characters.")
       end
     end
+
+    context "when attachment size equal to 0B" do
+      it "will return falsey hash with errors" do
+        file = double
+        comment = Comment.new({
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World! #gg",
+          :attachment => file
+        })
+
+        allow(file)
+          .to receive(:size)
+          .and_return(0)
+
+        validate_result = comment.validate
+        expect(validate_result[:valid]).to be_falsey
+        expect(validate_result[:errors].first).to eq("Attachment size can't be equal to 0 Bytes.")
+      end
+    end
   end
 end
