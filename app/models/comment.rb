@@ -65,7 +65,16 @@ class Comment
     end
 
     client = MySQLConnector.client
-    client.query("INSERT INTO comments(user_id, post_id, body) VALUES(#{@user_id}, #{@post_id}, '#{@body}');")
+    if @attachment
+      extension = File.extname(@attachment)
+      filename = Time.now.strftime("%Y%m%d%H%M%S#{extension}")
+      File.open("public/attachments/#{filename}", "wb") do |file|
+        file.write(@attachment.read)
+      end
+      client.query("INSERT INTO comments(user_id, post_id, body, attachment) VALUES(#{@user_id}, #{@post_id}, '#{@body}', '#{filename}');")
+    else
+      client.query("INSERT INTO comments(user_id, post_id, body) VALUES(#{@user_id}, #{@post_id}, '#{@body}');")
+    end
     id = client.last_id
     row = client.query("SELECT * FROM comments WHERE id = #{id};")
     row = row.first

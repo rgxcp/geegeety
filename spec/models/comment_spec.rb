@@ -226,5 +226,77 @@ describe Comment do
         })
       end
     end
+
+    context "when passed validation, with attachment, and without hashtags" do
+      it "will return truthy hash with generated comment data" do
+        file = double
+        comment = Comment.new({
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World!",
+          :attachment => file
+        })
+
+        allow(comment)
+          .to receive(:validate)
+          .and_return({
+            :valid => true,
+            :errors => []
+          })
+
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(File)
+          .to receive(:extname)
+          .with(file)
+          .and_return(".jpg")
+
+        allow(Time)
+          .to receive_message_chain(:now, :strftime)
+          .with("%Y%m%d%H%M%S.jpg")
+          .and_return("20210821200821.jpg")
+
+        expect(File)
+          .to receive(:open)
+          .with("public/attachments/20210821200821.jpg", "wb")
+
+        expect(client)
+          .to receive(:query)
+          .with("INSERT INTO comments(user_id, post_id, body, attachment) VALUES(2, 1, 'Hello too, World!', '20210821200821.jpg');")
+
+        allow(client)
+          .to receive(:last_id)
+          .and_return(1)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT * FROM comments WHERE id = 1;")
+          .and_return([{
+            "id" => 1,
+            "user_id" => 2,
+            "post_id" => 1,
+            "body" => "Hello too, World!",
+            "attachment" => "20210821200821.jpg",
+            "hashtags" => [],
+            "created_at" => "2021-08-21 20:08:21"
+          }])
+
+        save_result = comment.save
+        expect(save_result[:success]).to be_truthy
+        expect(save_result[:errors].size).to eq(0)
+        expect(save_result[:comment]).to eq({
+          :id => 1,
+          :user_id => 2,
+          :post_id => 1,
+          :body => "Hello too, World!",
+          :attachment => "20210821200821.jpg",
+          :hashtags => [],
+          :created_at => "2021-08-21 20:08:21"
+        })
+      end
+    end
   end
 end
