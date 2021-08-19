@@ -1,17 +1,17 @@
 require_relative "../../app/models/post"
 
 describe Post do
+  let(:file) { double }
+
+  let(:post) {
+    Post.new({
+      :user_id => 2,
+      :body => "Hello, World! #gg",
+      :attachment => file
+    })
+  }
+
   describe "#validate" do
-    let(:file) { double }
-
-    let(:post) {
-      Post.new({
-        :user_id => 2,
-        :body => "Hello, World! #gg",
-        :attachment => file
-      })
-    }
-
     context "when user_id nil" do
       it "will return falsey hash with errors" do
         post = Post.new({
