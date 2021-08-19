@@ -1,3 +1,4 @@
+require "date"
 require_relative "../db/mysql_connector"
 
 class Hashtag
@@ -63,5 +64,24 @@ class Hashtag
     }
 
     result
+  end
+
+  def self.trending
+    results = []
+
+    client = MySQLConnector.client
+    prev_day = DateTime.now.prev_day.strftime("%Y-%m-%d %H:%M:%S")
+    rows = client.query("SELECT name, COUNT(name) AS count FROM hashtags WHERE created_at >= '#{prev_day}' GROUP BY name ORDER BY count DESC LIMIT 5;")
+    if rows.size > 0
+      rows.each do |row|
+        hashtag = {
+          :name => row["name"],
+          :count => row["count"]
+        }
+        results << hashtag
+      end
+    end
+
+    results
   end
 end

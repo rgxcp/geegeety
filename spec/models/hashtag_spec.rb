@@ -147,8 +147,53 @@ describe Hashtag do
   describe ".trending" do
     context "when there's no trending hashtags in the past 24 hours" do
       it "will return empty array" do
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(DateTime)
+          .to receive_message_chain(:now, :prev_day, :strftime)
+          .with("%Y-%m-%d %H:%M:%S")
+          .and_return("2021-08-21 20:08:21")
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT name, COUNT(name) AS count FROM hashtags WHERE created_at >= '2021-08-21 20:08:21' GROUP BY name ORDER BY count DESC LIMIT 5;")
+          .and_return([])
+
         trending = Hashtag.trending
         expect(trending).to be_empty
+      end
+    end
+
+    context "when there's trending hashtags in the past 24 hours" do
+      it "will return array of hash" do
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(DateTime)
+          .to receive_message_chain(:now, :prev_day, :strftime)
+          .with("%Y-%m-%d %H:%M:%S")
+          .and_return("2021-08-21 20:08:21")
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT name, COUNT(name) AS count FROM hashtags WHERE created_at >= '2021-08-21 20:08:21' GROUP BY name ORDER BY count DESC LIMIT 5;")
+          .and_return([{
+            "name" => "backend",
+            "count" => 21
+          }])
+
+        trending = Hashtag.trending
+        expect(trending).to be_a(Array)
+        expect(trending.first).to be_a(Hash)
+        expect(trending.first).to eq({
+          :name => "backend",
+          :count => 21
+        })
       end
     end
   end
