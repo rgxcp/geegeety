@@ -86,6 +86,23 @@ class Hashtag
   end
 
   def self.posts(name)
-    []
+    results = []
+
+    client = MySQLConnector.client
+    rows = client.query("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = '#{name}' AND hashtagable_type = 'POST';")
+    if rows.size > 0
+      rows.each do |row|
+        post = {
+          :id => row["id"],
+          :user_id => row["user_id"],
+          :body => row["body"],
+          :attachment => row["attachment"],
+          :created_at => row["created_at"]
+        }
+        results << post
+      end
+    end
+
+    results
   end
 end

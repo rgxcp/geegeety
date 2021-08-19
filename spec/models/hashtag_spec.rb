@@ -201,8 +201,49 @@ describe Hashtag do
   describe ".posts(name)" do
     context "when there's no posts for a hashtag" do
       it "will return empty array" do
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'frontend' AND hashtagable_type = 'POST';")
+          .and_return([])
+
         hashtag_posts = Hashtag.posts("frontend")
         expect(hashtag_posts).to be_empty
+      end
+    end
+
+    context "when there's posts for a hashtag" do
+      it "will return array of hash" do
+        client = double
+        allow(MySQLConnector)
+          .to receive(:client)
+          .and_return(client)
+
+        allow(client)
+          .to receive(:query)
+          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'backend' AND hashtagable_type = 'POST';")
+          .and_return([{
+            "id" => 1,
+            "user_id" => 2,
+            "body" => "Hello, World!",
+            "attachment" => "",
+            "created_at" => "2021-08-21 20:08:21"
+          }])
+
+        hashtag_posts = Hashtag.posts("backend")
+        expect(hashtag_posts).to be_a(Array)
+        expect(hashtag_posts.first).to be_a(Hash)
+        expect(hashtag_posts.first).to eq({
+          :id => 1,
+          :user_id => 2,
+          :body => "Hello, World!",
+          :attachment => "",
+          :created_at => "2021-08-21 20:08:21"
+        })
       end
     end
   end
