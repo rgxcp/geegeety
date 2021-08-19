@@ -145,9 +145,10 @@ describe Hashtag do
   end
 
   describe ".trending" do
+    let(:client) { double }
+
     context "when there's no trending hashtags in the past 24 hours" do
       it "will return empty array" do
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -169,7 +170,6 @@ describe Hashtag do
 
     context "when there's trending hashtags in the past 24 hours" do
       it "will return array of hash" do
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
