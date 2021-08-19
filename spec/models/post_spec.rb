@@ -130,6 +130,8 @@ describe Post do
   end
 
   describe "#save" do
+    let(:client) { double }
+
     context "when doesn't pass validation" do
       it "will return falsey hash with errors" do
         post = Post.new({
@@ -164,7 +166,6 @@ describe Post do
             :errors => []
           })
 
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -217,7 +218,6 @@ describe Post do
             :errors => []
           })
 
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
