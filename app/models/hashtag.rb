@@ -84,4 +84,8 @@ class Hashtag
 
     results
   end
+
+  def self.posts(name)
+    []
+  end
 end

@@ -197,4 +197,13 @@ describe Hashtag do
       end
     end
   end
+
+  describe ".posts(name)" do
+    context "when there's no posts for a hashtag" do
+      it "will return empty array" do
+        hashtag_posts = Hashtag.posts("frontend")
+        expect(hashtag_posts).to be_empty
+      end
+    end
+  end
 end
