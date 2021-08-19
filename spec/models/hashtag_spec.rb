@@ -187,7 +187,7 @@ describe Hashtag do
           }])
 
         trending = Hashtag.trending
-        expect(trending).to be_a(Array)
+        expect(trending).to be_an(Array)
         expect(trending.first).to be_a(Hash)
         expect(trending.first).to eq({
           :name => "backend",
@@ -232,7 +232,7 @@ describe Hashtag do
           }])
 
         hashtag_posts = Hashtag.posts("backend")
-        expect(hashtag_posts).to be_a(Array)
+        expect(hashtag_posts).to be_an(Array)
         expect(hashtag_posts.first).to be_a(Hash)
         expect(hashtag_posts.first).to eq({
           :id => 1,
