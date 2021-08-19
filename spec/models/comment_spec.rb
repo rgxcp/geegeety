@@ -1,18 +1,18 @@
 require_relative "../../app/models/comment"
 
 describe Comment do
+  let(:file) { double }
+
+  let(:comment) {
+    Comment.new({
+      :user_id => 2,
+      :post_id => 1,
+      :body => "Hello too, World! #gg",
+      :attachment => file
+    })
+  }
+
   describe "#validate" do
-    let(:file) { double }
-
-    let(:comment) {
-      Comment.new({
-        :user_id => 2,
-        :post_id => 1,
-        :body => "Hello too, World! #gg",
-        :attachment => file
-      })
-    }
-
     context "when user_id nil" do
       it "will return falsey hash with errors" do
         comment = Comment.new({
