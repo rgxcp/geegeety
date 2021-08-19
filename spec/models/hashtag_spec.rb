@@ -1,6 +1,8 @@
 require_relative "../../app/models/hashtag"
 
 describe Hashtag do
+  let(:client) { double }
+
   describe "#validate" do
     context "when hashtagable_id nil" do
       it "will return falsey hash with errors" do
@@ -106,7 +108,6 @@ describe Hashtag do
             :errors => []
           })
 
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -145,8 +146,6 @@ describe Hashtag do
   end
 
   describe ".trending" do
-    let(:client) { double }
-
     context "when there's no trending hashtags in the past 24 hours" do
       it "will return empty array" do
         allow(MySQLConnector)
@@ -201,7 +200,6 @@ describe Hashtag do
   describe ".posts(name)" do
     context "when there's no posts for a hashtag" do
       it "will return empty array" do
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
@@ -218,7 +216,6 @@ describe Hashtag do
 
     context "when there's posts for a hashtag" do
       it "will return array of hash" do
-        client = double
         allow(MySQLConnector)
           .to receive(:client)
           .and_return(client)
