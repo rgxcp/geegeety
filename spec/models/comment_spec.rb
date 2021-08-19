@@ -259,9 +259,15 @@ describe Comment do
           .with("%Y%m%d%H%M%S.jpg")
           .and_return("20210821200821.jpg")
 
-        expect(File)
+        file = double
+        allow(File)
           .to receive(:open)
           .with("public/attachments/20210821200821.jpg", "wb")
+          .and_return(file)
+
+        expect(attachment).to receive(:read)
+
+        expect(file).to receive(:write)
 
         expect(client)
           .to receive(:query)
