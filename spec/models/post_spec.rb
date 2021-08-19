@@ -1,13 +1,13 @@
 require_relative "../../app/models/post"
 
 describe Post do
-  let(:file) { double }
+  let(:attachment) { double }
 
   let(:post) {
     Post.new({
       :user_id => 2,
       :body => "Hello, World! #gg",
-      :attachment => file
+      :attachment => attachment
     })
   }
 
@@ -57,7 +57,7 @@ describe Post do
 
     context "when attachment size equal to 0B" do
       it "will return falsey hash with errors" do
-        allow(file)
+        allow(attachment)
           .to receive(:size)
           .and_return(0)
 
@@ -69,7 +69,7 @@ describe Post do
 
     context "when attachment size more than 5MB" do
       it "will return falsey hash with errors" do
-        allow(file)
+        allow(attachment)
           .to receive(:size)
           .and_return(5242881)
 
@@ -204,11 +204,11 @@ describe Post do
 
     context "when passed validation, with attachment, and without hashtags" do
       it "will return truthy hash with generated post data" do
-        file = double
+        attachment = double
         post = Post.new({
           :user_id => 2,
           :body => "Hello, World!",
-          :attachment => file
+          :attachment => attachment
         })
 
         allow(post)
@@ -224,7 +224,7 @@ describe Post do
 
         allow(File)
           .to receive(:extname)
-          .with(file)
+          .with(attachment)
           .and_return(".jpg")
 
         allow(Time)

@@ -1,14 +1,14 @@
 require_relative "../../app/models/comment"
 
 describe Comment do
-  let(:file) { double }
+  let(:attachment) { double }
 
   let(:comment) {
     Comment.new({
       :user_id => 2,
       :post_id => 1,
       :body => "Hello too, World! #gg",
-      :attachment => file
+      :attachment => attachment
     })
   }
 
@@ -73,7 +73,7 @@ describe Comment do
 
     context "when attachment size equal to 0B" do
       it "will return falsey hash with errors" do
-        allow(file)
+        allow(attachment)
           .to receive(:size)
           .and_return(0)
 
@@ -85,7 +85,7 @@ describe Comment do
 
     context "when attachment size more than 5MB" do
       it "will return falsey hash with errors" do
-        allow(file)
+        allow(attachment)
           .to receive(:size)
           .and_return(5242881)
 
@@ -230,12 +230,12 @@ describe Comment do
 
     context "when passed validation, with attachment, and without hashtags" do
       it "will return truthy hash with generated comment data" do
-        file = double
+        attachment = double
         comment = Comment.new({
           :user_id => 2,
           :post_id => 1,
           :body => "Hello too, World!",
-          :attachment => file
+          :attachment => attachment
         })
 
         allow(comment)
@@ -251,7 +251,7 @@ describe Comment do
 
         allow(File)
           .to receive(:extname)
-          .with(file)
+          .with(attachment)
           .and_return(".jpg")
 
         allow(Time)
