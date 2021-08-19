@@ -143,4 +143,13 @@ describe Hashtag do
       end
     end
   end
+
+  describe ".trending" do
+    context "when there's no trending hashtags in the past 24 hours" do
+      it "will return empty array" do
+        trending = Hashtag.trending
+        expect(trending).to be_empty
+      end
+    end
+  end
 end
