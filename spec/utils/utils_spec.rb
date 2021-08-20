@@ -55,8 +55,10 @@ describe Utils do
         .to receive(:open)
         .and_return(file)
 
-      attachment = double
-      expect(attachment).to receive(:read)
+      attachment = {
+        :tempfile => double
+      }
+      expect(attachment[:tempfile]).to receive(:read)
 
       expect(file).to receive(:write)
 

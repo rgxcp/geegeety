@@ -18,11 +18,11 @@ class Utils
   end
 
   def self.upload_file(attachment)
-    extension = File.extname(attachment)
+    extension = File.extname(attachment[:tempfile])
     filename = Time.now.strftime("%Y%m%d%H%M%S#{extension}")
 
     file = File.open("public/attachments/#{filename}", "wb")
-    file.write(attachment.read)
+    file.write(attachment[:tempfile].read)
 
     filename
   end
