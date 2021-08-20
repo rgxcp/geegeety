@@ -7,9 +7,10 @@ describe PostCommentsController do
     PostCommentsController
   end
 
+  let(:comment) { double }
+
   context "when doesn't pass validation" do
     it "will return 403 with errors" do
-      comment = double
       allow(Comment)
         .to receive(:new)
         .and_return(comment)
@@ -40,7 +41,6 @@ describe PostCommentsController do
 
   context "when passed validation" do
     it "will return 201 with generated comment data" do
-      comment = double
       allow(Comment)
         .to receive(:new)
         .and_return(comment)
