@@ -7,9 +7,10 @@ describe UsersController do
     UsersController
   end
 
+  let(:user) { double }
+
   context "when doesn't pass validation" do
     it "will return 403 with errors" do
-      user = double
       allow(User)
         .to receive(:new)
         .and_return(user)
@@ -42,7 +43,6 @@ describe UsersController do
 
   context "when passed validation" do
     it "will return 201 with generated user data" do
-      user = double
       allow(User)
         .to receive(:new)
         .and_return(user)
