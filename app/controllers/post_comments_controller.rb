@@ -6,11 +6,22 @@ class PostCommentsController < ApplicationController
     comment = Comment.new(params)
     comment = comment.save
 
-    status 403
-    result = {
-      :status => "Failed",
-      :errors => comment[:errors]
-    }
+    if comment[:success]
+      status 201
+      result = {
+        :status => "Success",
+        :data => {
+          :comment => comment[:comment]
+        }
+      }
+    else
+      status 403
+      result = {
+        :status => "Failed",
+        :errors => comment[:errors]
+      }
+    end
+
     result.to_json
   end
 end
