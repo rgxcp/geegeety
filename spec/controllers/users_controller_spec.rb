@@ -39,4 +39,44 @@ describe UsersController do
       }.to_json)
     end
   end
+
+  context "when passed validation" do
+    it "will return 201 with generated user data" do
+      user = double
+      allow(User)
+        .to receive(:new)
+        .and_return(user)
+
+      allow(user)
+        .to receive(:save)
+        .and_return({
+          :success => true,
+          :errors => [],
+          :user => {
+            :id => 2,
+            :username => "johndoe",
+            :email => "johndoe@gmail.com",
+            :bio => "Backend Student",
+            :created_at => "2021-08-21 20:08:21"
+          }
+        })
+
+      post "/api/v1/users"
+
+      expect(last_response).to be_created
+      expect(last_response.status).to eq(201)
+      expect(last_response.body).to eq({
+        :status => "Success",
+        :data => {
+          :user => {
+            :id => 2,
+            :username => "johndoe",
+            :email => "johndoe@gmail.com",
+            :bio => "Backend Student",
+            :created_at => "2021-08-21 20:08:21"
+          }
+        }
+      }.to_json)
+    end
+  end
 end

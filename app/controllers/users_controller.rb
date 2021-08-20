@@ -6,11 +6,22 @@ class UsersController < ApplicationController
     user = User.new(params)
     user = user.save
 
-    status 403
-    result = {
-      :status => "Failed",
-      :errors => user[:errors]
-    }
+    if user[:success]
+      status 201
+      result = {
+        :status => "Success",
+        :data => {
+          :user => user[:user]
+        }
+      }
+    else
+      status 403
+      result = {
+        :status => "Failed",
+        :errors => user[:errors]
+      }
+    end
+
     result.to_json
   end
 end
