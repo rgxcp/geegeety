@@ -206,7 +206,7 @@ describe Hashtag do
 
         allow(client)
           .to receive(:query)
-          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'frontend' AND hashtagable_type = 'POST';")
+          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'frontend' AND hashtagable_type = 'POST' ORDER BY id DESC;")
           .and_return([])
 
         hashtag_posts = Hashtag.posts("frontend")
@@ -222,7 +222,7 @@ describe Hashtag do
 
         allow(client)
           .to receive(:query)
-          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'backend' AND hashtagable_type = 'POST';")
+          .with("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = 'backend' AND hashtagable_type = 'POST' ORDER BY id DESC;")
           .and_return([{
             "id" => 1,
             "user_id" => 2,

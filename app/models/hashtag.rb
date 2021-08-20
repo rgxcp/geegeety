@@ -89,7 +89,7 @@ class Hashtag
     results = []
 
     client = MySQLConnector.client
-    rows = client.query("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = '#{name}' AND hashtagable_type = 'POST';")
+    rows = client.query("SELECT posts.* FROM hashtags JOIN posts ON hashtags.hashtagable_id = posts.id WHERE name = '#{name}' AND hashtagable_type = 'POST' ORDER BY id DESC;")
     if rows.size > 0
       rows.each do |row|
         post = {
