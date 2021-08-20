@@ -1,4 +1,5 @@
 require_relative "../db/mysql_connector"
+require_relative "../utils/utils"
 
 class Comment
   def initialize(params)
@@ -86,6 +87,13 @@ class Comment
       :hashtags => [],
       :created_at => row["created_at"]
     }
+
+    hashtags = self.filter_hashtags
+    result[:comment][:hashtags] = Utils.store_hashtags({
+      :hashtagable_id => result[:comment][:id],
+      :hashtagable_type => "COMMENT",
+      :hashtags => hashtags
+    }) if hashtags.size > 0
 
     result
   end

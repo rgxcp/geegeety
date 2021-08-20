@@ -213,6 +213,10 @@ describe Comment do
             "created_at" => "2021-08-21 20:08:21"
           }])
 
+        allow(comment)
+          .to receive(:filter_hashtags)
+          .and_return([])
+
         save_result = comment.save
         expect(save_result[:success]).to be_truthy
         expect(save_result[:errors].size).to eq(0)
@@ -228,13 +232,13 @@ describe Comment do
       end
     end
 
-    context "when passed validation, with attachment, and without hashtags" do
-      it "will return truthy hash with generated comment data" do
+    context "when passed validation and with attachment & hashtags" do
+      it "will return truthy hash with generated comment data with attachment and hashtags" do
         attachment = double
         comment = Comment.new({
           :user_id => 2,
           :post_id => 1,
-          :body => "Hello too, World!",
+          :body => "Hello too, World! #backend",
           :attachment => attachment
         })
 
@@ -271,7 +275,7 @@ describe Comment do
 
         expect(client)
           .to receive(:query)
-          .with("INSERT INTO comments(user_id, post_id, body, attachment) VALUES(2, 1, 'Hello too, World!', '20210821200821.jpg');")
+          .with("INSERT INTO comments(user_id, post_id, body, attachment) VALUES(2, 1, 'Hello too, World! #backend', '20210821200821.jpg');")
 
         allow(client)
           .to receive(:last_id)
@@ -284,10 +288,24 @@ describe Comment do
             "id" => 1,
             "user_id" => 2,
             "post_id" => 1,
-            "body" => "Hello too, World!",
+            "body" => "Hello too, World! #backend",
             "attachment" => "20210821200821.jpg",
             "hashtags" => [],
             "created_at" => "2021-08-21 20:08:21"
+          }])
+
+        allow(comment)
+          .to receive(:filter_hashtags)
+          .and_return(["backend"])
+
+        allow(Utils)
+          .to receive(:store_hashtags)
+          .and_return([{
+            :id => 1,
+            :hashtagable_id => 1,
+            :hashtagable_type => "COMMENT",
+            :name => "backend",
+            :created_at => "2021-08-21 20:08:21"
           }])
 
         save_result = comment.save
@@ -297,9 +315,15 @@ describe Comment do
           :id => 1,
           :user_id => 2,
           :post_id => 1,
-          :body => "Hello too, World!",
+          :body => "Hello too, World! #backend",
           :attachment => "20210821200821.jpg",
-          :hashtags => [],
+          :hashtags => [{
+            :id => 1,
+            :hashtagable_id => 1,
+            :hashtagable_type => "COMMENT",
+            :name => "backend",
+            :created_at => "2021-08-21 20:08:21"
+          }],
           :created_at => "2021-08-21 20:08:21"
         })
       end
