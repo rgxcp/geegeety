@@ -1,4 +1,5 @@
 require_relative "../db/mysql_connector"
+require_relative "../utils/utils"
 
 class Post
   def initialize(params)
@@ -76,8 +77,16 @@ class Post
       :user_id => @user_id,
       :body => @body,
       :attachment => row["attachment"],
+      :hashtags => [],
       :created_at => row["created_at"]
     }
+
+    hashtags = self.filter_hashtags
+    result[:post][:hashtags] = Utils.store_hashtags({
+      :hashtagable_id => result[:post][:id],
+      :hashtagable_type => "POST",
+      :hashtags => hashtags
+    }) if hashtags.size > 0
 
     result
   end

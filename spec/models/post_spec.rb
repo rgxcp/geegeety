@@ -186,8 +186,13 @@ describe Post do
             "user_id" => 2,
             "body" => "Hello, World!",
             "attachment" => "",
+            "hashtags" => [],
             "created_at" => "2021-08-21 20:08:21"
           }])
+
+        allow(post)
+          .to receive(:filter_hashtags)
+          .and_return([])
 
         save_result = post.save
         expect(save_result[:success]).to be_truthy
@@ -197,17 +202,18 @@ describe Post do
           :user_id => 2,
           :body => "Hello, World!",
           :attachment => "",
+          :hashtags => [],
           :created_at => "2021-08-21 20:08:21"
         })
       end
     end
 
-    context "when passed validation, with attachment, and without hashtags" do
-      it "will return truthy hash with generated post data" do
+    context "when passed validation and with attachment & hashtags" do
+      it "will return truthy hash with generated post data with attachment and hashtags" do
         attachment = double
         post = Post.new({
           :user_id => 2,
-          :body => "Hello, World!",
+          :body => "Hello, World! #backend",
           :attachment => attachment
         })
 
@@ -244,7 +250,7 @@ describe Post do
 
         expect(client)
           .to receive(:query)
-          .with("INSERT INTO posts(user_id, body, attachment) VALUES(2, 'Hello, World!', '20210821200821.jpg');")
+          .with("INSERT INTO posts(user_id, body, attachment) VALUES(2, 'Hello, World! #backend', '20210821200821.jpg');")
 
         allow(client)
           .to receive(:last_id)
@@ -256,9 +262,24 @@ describe Post do
           .and_return([{
             "id" => 1,
             "user_id" => 2,
-            "body" => "Hello, World!",
+            "body" => "Hello, World! #backend",
             "attachment" => "20210821200821.jpg",
+            "hashtags" => [],
             "created_at" => "2021-08-21 20:08:21"
+          }])
+
+        allow(post)
+          .to receive(:filter_hashtags)
+          .and_return(["backend"])
+
+        allow(Utils)
+          .to receive(:store_hashtags)
+          .and_return([{
+            :id => 1,
+            :hashtagable_id => 1,
+            :hashtagable_type => "POST",
+            :name => "backend",
+            :created_at => "2021-08-21 20:08:21"
           }])
 
         save_result = post.save
@@ -267,8 +288,15 @@ describe Post do
         expect(save_result[:post]).to eq({
           :id => 1,
           :user_id => 2,
-          :body => "Hello, World!",
+          :body => "Hello, World! #backend",
           :attachment => "20210821200821.jpg",
+          :hashtags => [{
+            :id => 1,
+            :hashtagable_id => 1,
+            :hashtagable_type => "POST",
+            :name => "backend",
+            :created_at => "2021-08-21 20:08:21"
+          }],
           :created_at => "2021-08-21 20:08:21"
         })
       end
