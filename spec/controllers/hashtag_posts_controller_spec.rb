@@ -9,6 +9,10 @@ describe HashtagPostsController do
 
   context "when there's no posts for a hashtag" do
     it "will return 404 with not found message" do
+      allow(Hashtag)
+        .to receive(:posts)
+        .and_return([])
+
       get "/api/v1/hashtags/:name/posts"
 
       expect(last_response).to be_not_found
@@ -16,6 +20,37 @@ describe HashtagPostsController do
       expect(last_response.body).to eq({
         :status => "Success",
         :message => "Not Found"
+      }.to_json)
+    end
+  end
+
+  context "when there's posts for a hashtag" do
+    it "will return 200 with posts data" do
+      allow(Hashtag)
+        .to receive(:posts)
+        .and_return([{
+          :id => 1,
+          :user_id => 2,
+          :body => "Hello, World! #backend",
+          :attachment => "20210821200821.jpg",
+          :created_at => "2021-08-21 20:08:21"
+        }])
+  
+      get "/api/v1/hashtags/:name/posts"
+  
+      expect(last_response).to be_ok
+      expect(last_response.status).to eq(200)
+      expect(last_response.body).to eq({
+        :status => "Success",
+        :data => {
+          :posts => [{
+            :id => 1,
+            :user_id => 2,
+            :body => "Hello, World! #backend",
+            :attachment => "20210821200821.jpg",
+            :created_at => "2021-08-21 20:08:21"
+          }]
+        }
       }.to_json)
     end
   end
