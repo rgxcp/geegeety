@@ -7,14 +7,15 @@ describe PostsController do
     PostsController
   end
 
+  let(:user_post) { double }
+
   context "when doesn't pass validation" do
     it "will return 403 with errors" do
-      post = double
       allow(Post)
         .to receive(:new)
-        .and_return(post)
+        .and_return(user_post)
 
-      allow(post)
+      allow(user_post)
         .to receive(:save)
         .and_return({
           :success => false,
@@ -40,12 +41,11 @@ describe PostsController do
 
   context "when passed validation" do
     it "will return 201 with generated post data" do
-      post = double
       allow(Post)
         .to receive(:new)
-        .and_return(post)
+        .and_return(user_post)
 
-      allow(post)
+      allow(user_post)
         .to receive(:save)
         .and_return({
           :success => true,
