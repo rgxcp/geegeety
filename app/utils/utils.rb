@@ -16,4 +16,14 @@ class Utils
 
     results
   end
+
+  def self.upload_file(attachment)
+    extension = File.extname(attachment)
+    filename = Time.now.strftime("%Y%m%d%H%M%S#{extension}")
+
+    file = File.open("public/attachments/#{filename}", "wb")
+    file.write(attachment.read)
+
+    filename
+  end
 end

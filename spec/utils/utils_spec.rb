@@ -39,4 +39,30 @@ describe Utils do
       })
     end
   end
+
+  describe ".upload_file(attachment)" do
+    it "will return filename" do
+      allow(File)
+        .to receive(:extname)
+        .and_return(".jpg")
+
+      allow(Time)
+        .to receive_message_chain(:now, :strftime)
+        .and_return("20210821200821.jpg")
+
+      file = double
+      allow(File)
+        .to receive(:open)
+        .and_return(file)
+
+      attachment = double
+      expect(attachment).to receive(:read)
+
+      expect(file).to receive(:write)
+
+      uploaded_file = Utils.upload_file(attachment)
+
+      expect(uploaded_file).to eq("20210821200821.jpg")
+    end
+  end
 end
