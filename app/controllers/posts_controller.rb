@@ -6,11 +6,22 @@ class PostsController < ApplicationController
     post = Post.new(params)
     post = post.save
 
-    status 403
-    result = {
-      :status => "Failed",
-      :errors => post[:errors]
-    }
+    if post[:success]
+      status 201
+      result = {
+        :status => "Success",
+        :data => {
+          :post => post[:post]
+        }
+      }
+    else
+      status 403
+      result = {
+        :status => "Failed",
+        :errors => post[:errors]
+      }
+    end
+
     result.to_json
   end
 end
