@@ -67,10 +67,7 @@ class Comment
 
     client = MySQLConnector.client
     if @attachment
-      extension = File.extname(@attachment)
-      filename = Time.now.strftime("%Y%m%d%H%M%S#{extension}")
-      file = File.open("public/attachments/#{filename}", "wb")
-      file.write(@attachment.read)
+      filename = Utils.upload_file(@attachment)
       client.query("INSERT INTO comments(user_id, post_id, body, attachment) VALUES(#{@user_id}, #{@post_id}, '#{@body}', '#{filename}');")
     else
       client.query("INSERT INTO comments(user_id, post_id, body) VALUES(#{@user_id}, #{@post_id}, '#{@body}');")

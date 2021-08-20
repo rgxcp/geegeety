@@ -228,25 +228,9 @@ describe Post do
           .to receive(:client)
           .and_return(client)
 
-        allow(File)
-          .to receive(:extname)
-          .with(attachment)
-          .and_return(".jpg")
-
-        allow(Time)
-          .to receive_message_chain(:now, :strftime)
-          .with("%Y%m%d%H%M%S.jpg")
+        allow(Utils)
+          .to receive(:upload_file)
           .and_return("20210821200821.jpg")
-
-        file = double
-        allow(File)
-          .to receive(:open)
-          .with("public/attachments/20210821200821.jpg", "wb")
-          .and_return(file)
-
-        expect(attachment).to receive(:read)
-
-        expect(file).to receive(:write)
 
         expect(client)
           .to receive(:query)
