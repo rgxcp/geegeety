@@ -55,7 +55,7 @@ describe PostCommentsController do
             :user_id => 2,
             :post_id => 1,
             :body => "Hello too, World! #backend",
-            :attachment => "20210821200821.jpg",
+            :attachment => "http://localhost:4567/api/v1/attachments/20210821200821.jpg",
             :hashtags => [{
               :id => 1,
               :hashtagable_id => 1,
@@ -79,7 +79,7 @@ describe PostCommentsController do
             :user_id => 2,
             :post_id => 1,
             :body => "Hello too, World! #backend",
-            :attachment => "20210821200821.jpg",
+            :attachment => "http://localhost:4567/api/v1/attachments/20210821200821.jpg",
             :hashtags => [{
               :id => 1,
               :hashtagable_id => 1,

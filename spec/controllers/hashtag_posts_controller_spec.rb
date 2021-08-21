@@ -32,7 +32,7 @@ describe HashtagPostsController do
           :id => 1,
           :user_id => 2,
           :body => "Hello, World! #backend",
-          :attachment => "20210821200821.jpg",
+          :attachment => "http://localhost:4567/api/v1/attachments/20210821200821.jpg",
           :created_at => "2021-08-21 20:08:21 +0700"
         }])
   
@@ -47,7 +47,7 @@ describe HashtagPostsController do
             :id => 1,
             :user_id => 2,
             :body => "Hello, World! #backend",
-            :attachment => "20210821200821.jpg",
+            :attachment => "http://localhost:4567/api/v1/attachments/20210821200821.jpg",
             :created_at => "2021-08-21 20:08:21 +0700"
           }]
         }

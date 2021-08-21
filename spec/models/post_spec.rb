@@ -273,7 +273,7 @@ describe Post do
           :id => 1,
           :user_id => 2,
           :body => "Hello, World! #backend",
-          :attachment => "20210821200821.jpg",
+          :attachment => "http://localhost:4567/api/v1/attachments/20210821200821.jpg",
           :hashtags => [{
             :id => 1,
             :hashtagable_id => 1,

@@ -69,6 +69,7 @@ class Post
     id = client.last_id
     row = client.query("SELECT * FROM posts WHERE id = #{id};")
     row = row.first
+    row["attachment"] = "http://localhost:4567/api/v1/attachments/#{row["attachment"]}" unless row["attachment"].empty?
     result[:post] = {
       :id => row["id"],
       :user_id => @user_id,
