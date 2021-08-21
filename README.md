@@ -12,7 +12,7 @@ Unit Tests: **100%** (_58_ examples, _0_ failures)
 
 Code Coverage: **100%** (_24_ files in total, _811_ relevant lines, _811_ lines covered, _0_ lines missed)
 
-# Problems Description
+## Problems Description
 
 This API must be able to provide the following features, where:
 
@@ -23,7 +23,7 @@ This API must be able to provide the following features, where:
 5. User able to comment on a post that also might contain hashtag(s).
 6. User able to attach things to a post.
 
-# ERD Design
+## ERD Design
 
 <img src="ERD.jpg" alt="ERD Design" width="40%">
 
