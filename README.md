@@ -6,7 +6,7 @@
 
 ## Status
 
-DEVELOPING
+MAINTAINING
 
 Unit Tests: **100%** (_58_ examples, _0_ failures)
 
