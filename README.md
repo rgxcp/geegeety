@@ -145,7 +145,7 @@ This API must be able to provide the following features, where:
   <thead>
     <th>Method</th>
     <th>URL</th>
-    <th>Params</th>
+    <th>Params (Body)</th>
     <th>Description</th>
   </thead>
   <tbody>
