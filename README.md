@@ -114,7 +114,7 @@ This API must be able to provide the following features, where:
 10. Run the server.
 
     ```bash
-    $ rackup -p 4567 # accessible through http://localhost:4567
+    $ bundle exec rackup -p 4567 # accessible through http://localhost:4567
     ```
 
 11. Hit the API endpoints using Postman and do-what-you-want-with-it!
