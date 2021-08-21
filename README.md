@@ -10,7 +10,7 @@ MAINTAINING
 
 Unit Tests: **100%** (_58_ examples, _0_ failures)
 
-Code Coverage: **100%** (_24_ files in total, _809_ relevant lines, _809_ lines covered, _0_ lines missed)
+Code Coverage: **100%** (_24_ files in total, _811_ relevant lines, _811_ lines covered, _0_ lines missed)
 
 # Problems Description
 
