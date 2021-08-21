@@ -18,7 +18,7 @@ describe Utils do
             :hashtagable_id => 1,
             :hashtagable_type => "POST",
             :name => "backend",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         })
 
@@ -35,7 +35,7 @@ describe Utils do
         :hashtagable_id => 1,
         :hashtagable_type => "POST",
         :name => "backend",
-        :created_at => "2021-08-21 20:08:21"
+        :created_at => "2021-08-21 20:08:21 +0700"
       })
     end
   end

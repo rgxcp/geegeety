@@ -60,9 +60,9 @@ describe PostsController do
               :hashtagable_id => 1,
               :hashtagable_type => "POST",
               :name => "backend",
-              :created_at => "2021-08-21 20:08:21"
+              :created_at => "2021-08-21 20:08:21 +0700"
             }],
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         })
 
@@ -83,9 +83,9 @@ describe PostsController do
               :hashtagable_id => 1,
               :hashtagable_type => "POST",
               :name => "backend",
-              :created_at => "2021-08-21 20:08:21"
+              :created_at => "2021-08-21 20:08:21 +0700"
             }],
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         }
       }.to_json)

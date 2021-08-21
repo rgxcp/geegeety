@@ -61,9 +61,9 @@ describe PostCommentsController do
               :hashtagable_id => 1,
               :hashtagable_type => "COMMENT",
               :name => "backend",
-              :created_at => "2021-08-21 20:08:21"
+              :created_at => "2021-08-21 20:08:21 +0700"
             }],
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         })
 
@@ -85,9 +85,9 @@ describe PostCommentsController do
               :hashtagable_id => 1,
               :hashtagable_type => "COMMENT",
               :name => "backend",
-              :created_at => "2021-08-21 20:08:21"
+              :created_at => "2021-08-21 20:08:21 +0700"
             }],
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         }
       }.to_json)

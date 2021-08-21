@@ -187,7 +187,7 @@ describe Post do
             "body" => "Hello, World!",
             "attachment" => "",
             "hashtags" => [],
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         allow(post)
@@ -203,7 +203,7 @@ describe Post do
           :body => "Hello, World!",
           :attachment => "",
           :hashtags => [],
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end
@@ -249,7 +249,7 @@ describe Post do
             "body" => "Hello, World! #backend",
             "attachment" => "20210821200821.jpg",
             "hashtags" => [],
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         allow(post)
@@ -263,7 +263,7 @@ describe Post do
             :hashtagable_id => 1,
             :hashtagable_type => "POST",
             :name => "backend",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }])
 
         save_result = post.save
@@ -279,9 +279,9 @@ describe Post do
             :hashtagable_id => 1,
             :hashtagable_type => "POST",
             :name => "backend",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }],
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end

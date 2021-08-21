@@ -210,7 +210,7 @@ describe Comment do
             "body" => "Hello too, World!",
             "attachment" => "",
             "hashtags" => [],
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         allow(comment)
@@ -227,7 +227,7 @@ describe Comment do
           :body => "Hello too, World!",
           :attachment => "",
           :hashtags => [],
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end
@@ -275,7 +275,7 @@ describe Comment do
             "body" => "Hello too, World! #backend",
             "attachment" => "20210821200821.jpg",
             "hashtags" => [],
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         allow(comment)
@@ -289,7 +289,7 @@ describe Comment do
             :hashtagable_id => 1,
             :hashtagable_type => "COMMENT",
             :name => "backend",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }])
 
         save_result = comment.save
@@ -306,9 +306,9 @@ describe Comment do
             :hashtagable_id => 1,
             :hashtagable_type => "COMMENT",
             :name => "backend",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }],
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end

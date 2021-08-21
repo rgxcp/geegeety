@@ -57,7 +57,7 @@ describe UsersController do
             :username => "johndoe",
             :email => "johndoe@gmail.com",
             :bio => "Backend Student",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         })
 
@@ -73,7 +73,7 @@ describe UsersController do
             :username => "johndoe",
             :email => "johndoe@gmail.com",
             :bio => "Backend Student",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }
         }
       }.to_json)

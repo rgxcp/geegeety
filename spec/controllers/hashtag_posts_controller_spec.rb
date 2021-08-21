@@ -33,7 +33,7 @@ describe HashtagPostsController do
           :user_id => 2,
           :body => "Hello, World! #backend",
           :attachment => "20210821200821.jpg",
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         }])
   
       get "/api/v1/hashtags/:name/posts"
@@ -48,7 +48,7 @@ describe HashtagPostsController do
             :user_id => 2,
             :body => "Hello, World! #backend",
             :attachment => "20210821200821.jpg",
-            :created_at => "2021-08-21 20:08:21"
+            :created_at => "2021-08-21 20:08:21 +0700"
           }]
         }
       }.to_json)

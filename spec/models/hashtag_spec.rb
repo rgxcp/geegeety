@@ -128,7 +128,7 @@ describe Hashtag do
             "hashtagable_id" => 1,
             "hashtagable_type" => "POST",
             "name" => "backend",
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         save_result = hashtag.save
@@ -139,7 +139,7 @@ describe Hashtag do
           :hashtagable_id => 1,
           :hashtagable_type => "POST",
           :name => "backend",
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end
@@ -228,7 +228,7 @@ describe Hashtag do
             "user_id" => 2,
             "body" => "Hello, World!",
             "attachment" => "",
-            "created_at" => "2021-08-21 20:08:21"
+            "created_at" => "2021-08-21 20:08:21 +0700"
           }])
 
         hashtag_posts = Hashtag.posts("backend")
@@ -239,7 +239,7 @@ describe Hashtag do
           :user_id => 2,
           :body => "Hello, World!",
           :attachment => "",
-          :created_at => "2021-08-21 20:08:21"
+          :created_at => "2021-08-21 20:08:21 +0700"
         })
       end
     end
