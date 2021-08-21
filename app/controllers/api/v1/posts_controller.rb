@@ -1,24 +1,24 @@
 require_relative "application_controller"
-require_relative "../models/user"
+require_relative "../../../models/post"
 
-class UsersController < ApplicationController
-  post "/api/v1/users" do
-    user = User.new(params)
-    user = user.save
+class PostsController < ApplicationController
+  post "/api/v1/posts" do
+    post = Post.new(params)
+    post = post.save
 
-    if user[:success]
+    if post[:success]
       status 201
       result = {
         :status => "Success",
         :data => {
-          :user => user[:user]
+          :post => post[:post]
         }
       }
     else
       status 403
       result = {
         :status => "Failed",
-        :errors => user[:errors]
+        :errors => post[:errors]
       }
     end
 

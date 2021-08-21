@@ -1,6 +1,6 @@
 ENV["APP_ENV"] = "test"
 
-require_relative "../../app/controllers/posts_controller"
+require_relative "../../app/controllers/api/v1/posts_controller"
 
 describe PostsController do
   def app

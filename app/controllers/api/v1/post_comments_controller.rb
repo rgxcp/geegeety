@@ -1,5 +1,5 @@
 require_relative "application_controller"
-require_relative "../models/comment"
+require_relative "../../../models/comment"
 
 class PostCommentsController < ApplicationController
   post "/api/v1/posts/:post_id/comments" do

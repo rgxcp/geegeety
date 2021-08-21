@@ -1,5 +1,5 @@
 require_relative "application_controller"
-require_relative "../models/hashtag"
+require_relative "../../../models/hashtag"
 
 class HashtagsController < ApplicationController
   get "/api/v1/hashtags/trending" do

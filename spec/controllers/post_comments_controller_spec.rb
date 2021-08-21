@@ -1,6 +1,6 @@
 ENV["APP_ENV"] = "test"
 
-require_relative "../../app/controllers/post_comments_controller"
+require_relative "../../app/controllers/api/v1/post_comments_controller"
 
 describe PostCommentsController do
   def app

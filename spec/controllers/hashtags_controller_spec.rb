@@ -1,6 +1,6 @@
 ENV["APP_ENV"] = "test"
 
-require_relative "../../app/controllers/hashtags_controller"
+require_relative "../../app/controllers/api/v1/hashtags_controller"
 
 describe HashtagsController do
   def app
