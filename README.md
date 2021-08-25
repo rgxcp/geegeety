@@ -114,6 +114,12 @@ This API must be able to provide the following features, where:
 10. Run the server.
 
     ```bash
+    $ rackup -p 4567 # accessible through http://localhost:4567
+    ```
+
+    In case the above command doesn't work, run the following command:
+
+    ```bash
     $ bundle exec rackup -p 4567 # accessible through http://localhost:4567
     ```
 
@@ -131,6 +137,12 @@ This API must be able to provide the following features, where:
 
    ```bash
    $ rspec -fd
+   ```
+
+   In case the above command doesn't work, run the following command:
+
+   ```bash
+   $ bundle exec rspec -fd
    ```
 
 ### Run the Postman Collection Tests
