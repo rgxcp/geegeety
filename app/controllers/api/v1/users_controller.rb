@@ -8,7 +8,7 @@ class UsersController < APIController
 
     if user[:success]
       status 201
-      result = {
+      response = {
         :status => "Success",
         :data => {
           :user => user[:user]
@@ -16,12 +16,12 @@ class UsersController < APIController
       }
     else
       status 403
-      result = {
+      response = {
         :status => "Failed",
         :errors => user[:errors]
       }
     end
 
-    result.to_json
+    response.to_json
   end
 end

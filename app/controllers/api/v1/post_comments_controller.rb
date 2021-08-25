@@ -8,7 +8,7 @@ class PostCommentsController < APIController
 
     if comment[:success]
       status 201
-      result = {
+      response = {
         :status => "Success",
         :data => {
           :comment => comment[:comment]
@@ -16,12 +16,12 @@ class PostCommentsController < APIController
       }
     else
       status 403
-      result = {
+      response = {
         :status => "Failed",
         :errors => comment[:errors]
       }
     end
 
-    result.to_json
+    response.to_json
   end
 end

@@ -6,12 +6,12 @@ class HashtagsController < APIController
     hashtags = Hashtag.trending
 
     status 200
-    result = {
+    response = {
       :status => "Success",
       :data => {
         :hashtags => hashtags
       }
     }
-    result.to_json
+    response.to_json
   end
 end

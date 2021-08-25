@@ -7,7 +7,7 @@ class HashtagPostsController < APIController
 
     if posts.size > 0
       status 200
-      result = {
+      response = {
         :status => "Success",
         :data => {
           :posts => posts
@@ -15,12 +15,12 @@ class HashtagPostsController < APIController
       }
     else
       status 404
-      result = {
+      response = {
         :status => "Success",
         :message => "Not Found"
       }
     end
 
-    result.to_json
+    response.to_json
   end
 end
