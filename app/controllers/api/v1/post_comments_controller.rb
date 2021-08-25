@@ -1,7 +1,7 @@
-require_relative "application_controller"
+require_relative "../api_controller"
 require_relative "../../../models/comment"
 
-class PostCommentsController < ApplicationController
+class PostCommentsController < APIController
   post "/api/v1/posts/:post_id/comments" do
     comment = Comment.new(params)
     comment = comment.save

@@ -1,5 +1,5 @@
 require "sinatra/base"
 
-class ApplicationController < Sinatra::Base
+class APIController < Sinatra::Base
   set :default_content_type, "application/json"
 end

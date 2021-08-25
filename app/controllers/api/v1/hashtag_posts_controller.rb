@@ -1,7 +1,7 @@
-require_relative "application_controller"
+require_relative "../api_controller"
 require_relative "../../../models/hashtag"
 
-class HashtagPostsController < ApplicationController
+class HashtagPostsController < APIController
   get "/api/v1/hashtags/:name/posts" do
     posts = Hashtag.posts(params[:name])
 

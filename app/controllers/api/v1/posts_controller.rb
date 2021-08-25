@@ -1,7 +1,7 @@
-require_relative "application_controller"
+require_relative "../api_controller"
 require_relative "../../../models/post"
 
-class PostsController < ApplicationController
+class PostsController < APIController
   post "/api/v1/posts" do
     post = Post.new(params)
     post = post.save

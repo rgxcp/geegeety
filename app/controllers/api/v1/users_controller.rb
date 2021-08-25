@@ -1,7 +1,7 @@
-require_relative "application_controller"
+require_relative "../api_controller"
 require_relative "../../../models/user"
 
-class UsersController < ApplicationController
+class UsersController < APIController
   post "/api/v1/users" do
     user = User.new(params)
     user = user.save
