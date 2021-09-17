@@ -6,13 +6,17 @@
 
 ## Status
 
-MAINTAINING
+END OF LIFE
 
 Unit Tests: **100%** (_58_ examples, _0_ failures)
 
 Code Coverage: **100%** (_24_ files in total, _811_ relevant lines, _811_ lines covered, _0_ lines missed)
 
 ## Problems Description
+
+#GenerasiGIGIH students need a brand new, private social media for sharing information with others.
+
+This will be an API only social media, so there's no GUI for it.
 
 This API must be able to provide the following features, where:
 
@@ -71,7 +75,7 @@ This API must be able to provide the following features, where:
 4. Install the Gem dependencies.
 
    ```bash
-   bundle install
+   $ bundle install
    ```
 
 5. Create a new database.
