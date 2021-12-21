@@ -1,4 +1,4 @@
-# Ruby - Sinatra - Geegeety
+# 💪 Ruby - Sinatra - Geegeety
 
 **EN**: Geegeety (Generasi GIGIH Tweety) — A Twitter-like social media for #GenerasiGIGIH.
 
