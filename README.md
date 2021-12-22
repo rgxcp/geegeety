@@ -1,8 +1,6 @@
-# 💪 Ruby - Sinatra - Geegeety
+# 💪 Geegeety
 
-**EN**: Geegeety (Generasi GIGIH Tweety) — A Twitter-like social media for #GenerasiGIGIH.
-
-**ID**: Geegeety (Generasi GIGIH Tweety) — Sebuah sosial media seperti Twitter untuk #GenerasiGIGIH.
+Geegeety (Generasi GIGIH Tweety) — A Twitter-like social media for #GenerasiGIGIH.
 
 ## Status
 
